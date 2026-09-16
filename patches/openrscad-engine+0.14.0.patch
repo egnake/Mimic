@@ -1,0 +1,22 @@
+diff --git a/node_modules/openrscad-engine/dist/core.js b/node_modules/openrscad-engine/dist/core.js
+index 55dcfcd..a3bcd5e 100644
+--- a/node_modules/openrscad-engine/dist/core.js
++++ b/node_modules/openrscad-engine/dist/core.js
+@@ -25,7 +25,7 @@ export function makeApi(engine, ensureReady) {
+     async function render(source, opts = {}) {
+         await ensureReady();
+         const { names, values, fileNames, fileContents } = split(opts);
+-        const r = engine.render_with_files(source, names, values, fileNames, fileContents);
++        const r = engine.render_with_files(source, names, values, fileNames, fileContents, [], [], []);
+         try {
+             return {
+                 ok: r.ok,
+@@ -61,7 +61,7 @@ export function makeApi(engine, ensureReady) {
+     async function exportShape2D(source, format, opts = {}) {
+         await ensureReady();
+         const { names, values, fileNames, fileContents } = split(opts);
+-        return engine.export_2d(source, names, values, fileNames, fileContents, format);
++        return engine.export_2d(source, names, values, fileNames, fileContents, [], [], [], format);
+     }
+     /** The customizer parameter schema for a source string, as JSON
+      *  (`{"params":[…]}`). */

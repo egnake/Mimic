@@ -12,7 +12,8 @@ self.onmessage = async (e: MessageEvent) => {
       }
       const posBuf = r.positions.buffer;
       const normBuf = r.normals.buffer;
-      self.postMessage({ 
+      // Cast to any to avoid TS treating 'self' as a Window object
+      (self.postMessage as any)({ 
         id, 
         ok: true, 
         positions: posBuf, 
@@ -20,9 +21,15 @@ self.onmessage = async (e: MessageEvent) => {
         triangleCount: r.triangleCount 
       }, [posBuf, normBuf]);
     } else {
+      console.error("SCAD Render Failed:", r.error);
       self.postMessage({ id, ok: false, error: r.error || 'Failed to render', diagnostics: r.diagnostics });
     }
   } catch (err: unknown) {
-    self.postMessage({ id, ok: false, error: err instanceof Error ? err.message : String(err) });
+    console.error("Worker catch error:", err);
+    self.postMessage({ 
+      id, 
+      ok: false, 
+      error: err instanceof Error ? err.message : String(err)
+    });
   }
 };

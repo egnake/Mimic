@@ -20,26 +20,34 @@ export function useScadToMesh(scadString: string): ScadMeshResult {
     
     workerRef.current.onmessage = (e: MessageEvent) => {
       const data = e.data;
-      if (!data.ok) {
-        setError(data.error || "Failed to render 3D mesh.");
+      
+      try {
+        if (!data.ok) {
+          setError(data.error || "Failed to render 3D mesh.");
+          setLoading(false);
+          return;
+        }
+        
+        const posArray = new Float32Array(data.positions);
+        const normArray = new Float32Array(data.normals);
+        
+        const geom = new THREE.BufferGeometry();
+        geom.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+        geom.setAttribute('normal', new THREE.BufferAttribute(normArray, 3));
+        
+        setGeometry(geom);
+        setError(null);
         setLoading(false);
-        return;
+      } catch (err: unknown) {
+        setError(err instanceof Error ? err.message : String(err));
+        setLoading(false);
       }
-      
-      const posArray = new Float32Array(data.positions);
-      const normArray = new Float32Array(data.normals);
-      
-      const geom = new THREE.BufferGeometry();
-      geom.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
-      geom.setAttribute('normal', new THREE.BufferAttribute(normArray, 3));
-      
-      setGeometry(geom);
-      setError(null);
-      setLoading(false);
     };
     
     return () => {
-      workerRef.current?.terminate();
+      if (workerRef.current) {
+        workerRef.current.terminate();
+      }
     };
   }, []);
 

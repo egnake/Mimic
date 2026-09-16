@@ -14,7 +14,7 @@ export function Key3DViewer({ scadCode }: Key3DViewerProps) {
   
   if (error) {
     return (
-      <div className="flex h-full w-full items-center justify-center bg-zinc-950 text-red-400">
+      <div className="flex h-full w-full items-center justify-center bg-zinc-950 text-red-400 p-4">
         <p>Error rendering 3D model: {error}</p>
       </div>
     );
