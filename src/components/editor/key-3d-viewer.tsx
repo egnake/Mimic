@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useMemo } from 'react';
+import React from 'react';
 import { Canvas } from '@react-three/fiber';
-import { OrbitControls, Stage, Center } from '@react-three/drei';
+import { OrbitControls, Stage } from '@react-three/drei';
 import { useScadToMesh } from '@/hooks/use-scad-to-mesh';
 
 interface Key3DViewerProps {
@@ -36,7 +36,7 @@ export function Key3DViewer({ scadCode }: Key3DViewerProps) {
         <Stage 
           environment="city" 
           intensity={0.6}
-          contactShadow={{ opacity: 0.8, blur: 2 }}
+          shadows={{ type: 'contact', opacity: 0.8, blur: 2 }}
           adjustCamera={1.2}
         >
           {geometry && (

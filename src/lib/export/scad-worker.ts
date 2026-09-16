@@ -17,7 +17,7 @@ self.onmessage = async (e: MessageEvent) => {
     } else {
       self.postMessage({ id, ok: false, error: r.error, diagnostics: r.diagnostics });
     }
-  } catch (err: any) {
-    self.postMessage({ id, ok: false, error: err.message });
+  } catch (err: unknown) {
+    self.postMessage({ id, ok: false, error: err instanceof Error ? err.message : String(err) });
   }
 };
