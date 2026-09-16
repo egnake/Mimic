@@ -6,12 +6,14 @@ interface EditorState {
   history: KeyProfile[];
   historyIndex: number;
   isDirty: boolean;
+  customScad: string | null;
   
   setProfile: (profile: KeyProfile) => void;
   updateBitting: (index: number, value: string) => void;
   updateSecondaryBitting: (index: number, value: string) => void;
   updateTemplateId: (templateId: string) => void;
   updateProfileMeta: (meta: Partial<KeyProfile>) => void;
+  setCustomScad: (scad: string | null) => void;
   undo: () => void;
   redo: () => void;
   markSaved: () => void;
@@ -22,6 +24,9 @@ export const useEditorStore = create<EditorState>((set) => ({
   history: [],
   historyIndex: -1,
   isDirty: false,
+  customScad: null,
+
+  setCustomScad: (scad) => set({ customScad: scad }),
 
   setProfile: (profile) => set({
     currentProfile: profile,

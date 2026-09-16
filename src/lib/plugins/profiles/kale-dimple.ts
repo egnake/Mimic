@@ -128,10 +128,17 @@ module key_blank() {
   union() {
     // Bow
     translate([0, -25, 0])
-    linear_extrude(height=${bladeThickness}, center=true)
-    polygon(points=[
-      [-5, -5], [10, 0], [15, 12], [15, 25], [-15, 25], [-15, 12]
-    ]);
+    difference() {
+      // Main rounded bow shape
+      hull() {
+        translate([0, 10, -${bladeThickness/2}]) cylinder(r=10, h=${bladeThickness}, center=false);
+        translate([-12, -8, -${bladeThickness/2}]) cylinder(r=12, h=${bladeThickness}, center=false);
+        translate([12, -8, -${bladeThickness/2}]) cylinder(r=12, h=${bladeThickness}, center=false);
+      }
+      // Keyring hole
+      translate([0, -10, -${bladeThickness}])
+      cylinder(r=4, h=${bladeThickness*2}, center=false);
+    }
     
     // Blade
     translate([0, 0, -${bladeThickness/2}])

@@ -12,15 +12,15 @@ import { generateGCode } from "@/lib/export/gcode-generator";
 import { useI18nStore } from "@/stores/i18n-store";
 import { KeyVisual } from "@/components/editor/key-visual";
 import { Key3DViewer } from "@/components/editor/key-3d-viewer";
-import { Box, FileType2 } from "lucide-react";
+import { Box, FileType2, Code } from "lucide-react";
 
 export function BittingEditor() {
-  const { currentProfile, updateBitting, updateTemplateId, undo, redo, historyIndex, history } = useEditorStore();
+  const { currentProfile, updateBitting, updateTemplateId, undo, redo, historyIndex, history, customScad, setCustomScad } = useEditorStore();
   const { t } = useI18nStore();
   const svgRef = React.useRef<SVGSVGElement>(null);
   
   // View State
-  const [viewMode, setViewMode] = React.useState<'2d' | '3d'>('2d');
+  const [viewMode, setViewMode] = React.useState<'2d' | '3d' | 'code'>('2d');
 
   // Physical Match State
   const [physicalMode, setPhysicalMode] = React.useState(false);
@@ -107,7 +107,7 @@ export function BittingEditor() {
 
   const handleDownloadScad = () => {
     if (!currentProfile) return;
-    const scad = generateScad(currentProfile);
+    const scad = customScad || generateScad(currentProfile);
     const blob = new Blob([scad], { type: 'text/plain' });
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -477,16 +477,42 @@ export function BittingEditor() {
           >
             <Box className="w-4 h-4" /> 3D Preview
           </button>
+          <button
+            onClick={() => {
+              if (viewMode !== 'code' && !customScad) {
+                 setCustomScad(generateScad(currentProfile));
+              }
+              setViewMode('code');
+            }}
+            className={`flex items-center gap-2 px-4 py-1.5 rounded-sm text-sm font-medium transition-colors ${viewMode === 'code' ? 'bg-primary text-white shadow-sm' : 'text-muted-foreground hover:text-foreground'}`}
+          >
+            <Code className="w-4 h-4" /> SCAD Code
+          </button>
         </div>
       </div>
 
       {/* SVG Container or 3D Viewer */}
       <div 
-        className={`relative w-full rounded-xl border shadow-inner overflow-auto transition-colors ${viewMode === '3d' ? 'bg-zinc-900 border-zinc-800' : physicalMode ? 'bg-[#e0f7fa] border-[#b2ebf2]' : 'bg-background/50 border-border'}`} 
-        style={{ height: physicalMode || viewMode === '3d' ? '70vh' : '250px', touchAction: physicalMode && viewMode === '2d' ? 'pan-x pan-y' : 'none' }}
+        className={`relative w-full rounded-xl border shadow-inner overflow-auto transition-colors ${viewMode === '3d' || viewMode === 'code' ? 'bg-zinc-900 border-zinc-800' : physicalMode ? 'bg-[#e0f7fa] border-[#b2ebf2]' : 'bg-background/50 border-border'}`} 
+        style={{ height: physicalMode || viewMode === '3d' || viewMode === 'code' ? '70vh' : '250px', touchAction: physicalMode && viewMode === '2d' ? 'pan-x pan-y' : 'none' }}
       >
         {viewMode === '3d' ? (
-          <Key3DViewer scadCode={generateScad(currentProfile)} />
+          <Key3DViewer scadCode={customScad || generateScad(currentProfile)} />
+        ) : viewMode === 'code' ? (
+          <div className="w-full h-full flex flex-col bg-zinc-950 text-zinc-300">
+            <div className="flex justify-between items-center p-2 bg-zinc-900 border-b border-zinc-800">
+              <span className="text-xs font-mono text-zinc-500">Live OpenSCAD Code Editor</span>
+              <ClayButton size="sm" variant="ghost" className="h-6 text-xs text-red-400 hover:bg-red-950/30" onClick={() => setCustomScad(null)}>
+                Reset to Profile Defaults
+              </ClayButton>
+            </div>
+            <textarea 
+              className="w-full h-full p-4 font-mono text-sm bg-transparent outline-none resize-none"
+              value={customScad || generateScad(currentProfile)}
+              onChange={(e) => setCustomScad(e.target.value)}
+              spellCheck={false}
+            />
+          </div>
         ) : (
           <div 
             className="flex items-center min-w-full min-h-full origin-top-left"

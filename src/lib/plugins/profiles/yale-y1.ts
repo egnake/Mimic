@@ -79,12 +79,21 @@ module yale_warding_profile() {
 
 module key_blank() {
   union() {
+    // Realistic Bow (Head of the key)
     translate([0, -25, 0])
-    linear_extrude(height=2, center=true)
-    polygon(points=[
-      [-5, -5], [10, 0], [15, 12], [15, 25], [-15, 25], [-15, 12]
-    ]);
+    difference() {
+      // Main rounded bow shape
+      hull() {
+        translate([0, 10, -1]) cylinder(r=10, h=2, center=false);
+        translate([-12, -8, -1]) cylinder(r=12, h=2, center=false);
+        translate([12, -8, -1]) cylinder(r=12, h=2, center=false);
+      }
+      // Keyring hole
+      translate([0, -10, -2])
+      cylinder(r=4, h=4, center=false);
+    }
     
+    // Blade rendering
     translate([0, 0, -1])
     rotate([90, 0, 90])
     linear_extrude(height=${bladeLength})
