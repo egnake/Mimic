@@ -3,69 +3,61 @@
 exports[`Geometry Engine - OpenSCAD Generator > should generate valid OpenSCAD boolean subtractions for a given bitting 1`] = `
 "
 // Mimic Key Generator
-// Profile: Golden Standard 5-Pin (Flawless Physical Dimensions)
+// Profile: Golden Standard 5-Pin (Plugin: kwikset-kw1)
 // Bitting: 02468
 
-$fn = 64; // High smoothness for CNC/3D Printing
+$fn = 64;
 
-module schlage_warding_profile() {
-  // A mathematically precise approximation of the Schlage C warding profile
+module kwikset_warding_profile() {
   polygon(points=[
     [0, 0], [2, 0], 
-    [2, 3], [1.2, 3.5], [2, 4],
-    [2, 6], [0.8, 6.5], [2, 7],
-    [2, 10.03], 
-    [0, 10.03], 
-    [0, 8.5], [0.8, 8.0], [0, 7.5],
-    [0, 4.5], [1.2, 4.0], [0, 3.5]
+    [2, 3], [1.5, 3.5], [2, 4],
+    [2, 8.6], 
+    [0, 8.6], 
+    [0, 6.5], [0.5, 6.0], [0, 5.5],
+    [0, 4.5], [0.8, 4.0], [0, 3.5]
   ]);
 }
 
 module key_blank() {
   union() {
-    // Bow (Generic Pentagonal)
     translate([0, -25, 0])
     linear_extrude(height=2, center=true)
     polygon(points=[
-      [-10, 0], [10, 0], [15, 12], [15, 25], [-15, 25], [-15, 12]
+      [-5, -5], [10, 0], [15, 12], [15, 25], [-15, 25], [-15, 12]
     ]);
     
-    // Extruded Blade (Flawless Warding)
     translate([0, 0, -1])
     rotate([90, 0, 90])
-    linear_extrude(height=26.71)
-    schlage_warding_profile();
+    linear_extrude(height=27.11)
+    kwikset_warding_profile();
     
-    // Tapered Tip
-    translate([26.71, 0, 0])
+    translate([27.11, 0, 0])
     rotate([90, 0, 90])
     linear_extrude(height=4, scale=[0.2, 0.5])
-    schlage_warding_profile();
+    kwikset_warding_profile();
   }
 }
 
 module v_cut(depth) {
-  // A 90-degree included angle V-cut tool
-  // The tool is a wedge that sweeps across the blade
   hull() {
     translate([0, 0, depth])
-    cube([0.5, 3, 0.1], center=true); // Flat root (0.5mm wide)
+    cube([0.5, 3, 0.1], center=true);
     
     translate([0, 0, depth + 10])
-    cube([20, 3, 0.1], center=true); // 45 degree slopes -> 20mm wide at 10mm high
+    cube([20, 3, 0.1], center=true);
   }
 }
 
 module cuts() {
-  // Precise Bitting Cuts (V-Cuts)
-  translate([5.87, 0, 7.5]) rotate([90, 0, 0]) v_cut(0);
-  translate([9.83, 0, 6.7379999999999995]) rotate([90, 0, 0]) v_cut(0);
-  translate([13.79, 0, 5.976]) rotate([90, 0, 0]) v_cut(0);
-  translate([17.75, 0, 5.214]) rotate([90, 0, 0]) v_cut(0);
-  translate([21.71, 0, 4.452]) rotate([90, 0, 0]) v_cut(0);
+  translate([6.27, 0, 7.35]) rotate([90, 0, 0]) v_cut(0);
+  translate([10.23, 0, 6.1819999999999995]) rotate([90, 0, 0]) v_cut(0);
+  translate([14.19, 0, 5.013999999999999]) rotate([90, 0, 0]) v_cut(0);
+  translate([18.15, 0, 3.846]) rotate([90, 0, 0]) v_cut(0);
+  translate([22.11, 0, 2.678]) rotate([90, 0, 0]) v_cut(0);
 }
 
-// Final Render (Boolean Subtraction)
+// Final Render
 difference() {
   key_blank();
   cuts();

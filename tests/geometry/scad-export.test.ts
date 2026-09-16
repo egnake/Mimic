@@ -7,10 +7,10 @@ describe('Geometry Engine - OpenSCAD Generator', () => {
     const scad = generateScad(key01);
     
     // Check for base polygon (warding profile)
-    expect(scad).toContain('module schlage_warding_profile()');
+    expect(scad).toContain('module kwikset_warding_profile()');
     
-    // Check for physical Schlage spacing metrics
-    expect(scad).toContain('translate([5.87'); // FIRST_PIN_OFFSET
+    // Check for physical Kwikset spacing metrics
+    expect(scad).toContain('translate([6.27'); // FIRST_PIN_OFFSET
     
     // Check if difference (boolean subtraction) is utilized
     expect(scad).toContain('difference() {');
