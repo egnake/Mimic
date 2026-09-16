@@ -11,12 +11,17 @@ import { generateScad } from "@/lib/export/scad-generator";
 import { generateGCode } from "@/lib/export/gcode-generator";
 import { useI18nStore } from "@/stores/i18n-store";
 import { KeyVisual } from "@/components/editor/key-visual";
+import { Key3DViewer } from "@/components/editor/key-3d-viewer";
+import { Box, FileType2 } from "lucide-react";
 
 export function BittingEditor() {
   const { currentProfile, updateBitting, updateTemplateId, undo, redo, historyIndex, history } = useEditorStore();
   const { t } = useI18nStore();
   const svgRef = React.useRef<SVGSVGElement>(null);
   
+  // View State
+  const [viewMode, setViewMode] = React.useState<'2d' | '3d'>('2d');
+
   // Physical Match State
   const [physicalMode, setPhysicalMode] = React.useState(false);
   const [scale, setScale] = React.useState(100);
@@ -457,33 +462,54 @@ export function BittingEditor() {
         </div>
       )}
 
-      {/* SVG Container */}
-      <div 
-        className={`relative w-full rounded-xl border shadow-inner overflow-auto transition-colors ${physicalMode ? 'bg-[#e0f7fa] border-[#b2ebf2]' : 'bg-background/50 border-border'}`} 
-        style={{ height: physicalMode ? '70vh' : '250px', touchAction: physicalMode ? 'pan-x pan-y' : 'none' }}
-      >
-        <div 
-          className="flex items-center min-w-full min-h-full origin-top-left"
-          style={{ 
-            padding: physicalMode ? '100px 50px' : '20px',
-            justifyContent: physicalMode ? 'flex-start' : 'center'
-          }}
-        >
-          <svg 
-            ref={svgRef} 
-            viewBox="0 0 500 150" 
-            preserveAspectRatio="xMidYMid meet"
-            className="relative z-10" 
-            style={{ 
-              width: physicalMode ? `${500 * (scale / 100)}px` : '100%', 
-              height: physicalMode ? `${150 * (scale / 100)}px` : 'auto',
-              maxWidth: physicalMode ? 'none' : '280px',
-              transition: 'width 0.2s, max-width 0.2s, height 0.2s',
-              overflow: physicalMode ? 'visible' : 'hidden',
-              filter: physicalMode ? 'drop-shadow(0px 4px 6px rgba(0,0,0,0.1))' : 'drop-shadow(0px 10px 15px rgba(0,0,0,0.3))'
-            }}
-            fillRule="evenodd"
+      {/* View Mode Toggle */}
+      <div className="flex justify-center my-2">
+        <div className="flex bg-surface rounded-md border border-border p-1">
+          <button
+            onClick={() => setViewMode('2d')}
+            className={`flex items-center gap-2 px-4 py-1.5 rounded-sm text-sm font-medium transition-colors ${viewMode === '2d' ? 'bg-primary text-white shadow-sm' : 'text-muted-foreground hover:text-foreground'}`}
           >
+            <FileType2 className="w-4 h-4" /> 2D Blueprint
+          </button>
+          <button
+            onClick={() => setViewMode('3d')}
+            className={`flex items-center gap-2 px-4 py-1.5 rounded-sm text-sm font-medium transition-colors ${viewMode === '3d' ? 'bg-primary text-white shadow-sm' : 'text-muted-foreground hover:text-foreground'}`}
+          >
+            <Box className="w-4 h-4" /> 3D Preview
+          </button>
+        </div>
+      </div>
+
+      {/* SVG Container or 3D Viewer */}
+      <div 
+        className={`relative w-full rounded-xl border shadow-inner overflow-auto transition-colors ${viewMode === '3d' ? 'bg-zinc-900 border-zinc-800' : physicalMode ? 'bg-[#e0f7fa] border-[#b2ebf2]' : 'bg-background/50 border-border'}`} 
+        style={{ height: physicalMode || viewMode === '3d' ? '70vh' : '250px', touchAction: physicalMode && viewMode === '2d' ? 'pan-x pan-y' : 'none' }}
+      >
+        {viewMode === '3d' ? (
+          <Key3DViewer scadCode={generateScad(currentProfile)} />
+        ) : (
+          <div 
+            className="flex items-center min-w-full min-h-full origin-top-left"
+            style={{ 
+              padding: physicalMode ? '100px 50px' : '20px',
+              justifyContent: physicalMode ? 'flex-start' : 'center'
+            }}
+          >
+            <svg 
+              ref={svgRef} 
+              viewBox="0 0 500 150" 
+              preserveAspectRatio="xMidYMid meet"
+              className="relative z-10" 
+              style={{ 
+                width: physicalMode ? `${500 * (scale / 100)}px` : '100%', 
+                height: physicalMode ? `${150 * (scale / 100)}px` : 'auto',
+                maxWidth: physicalMode ? 'none' : '280px',
+                transition: 'width 0.2s, max-width 0.2s, height 0.2s',
+                overflow: physicalMode ? 'visible' : 'hidden',
+                filter: physicalMode ? 'drop-shadow(0px 4px 6px rgba(0,0,0,0.1))' : 'drop-shadow(0px 10px 15px rgba(0,0,0,0.3))'
+              }}
+              fillRule="evenodd"
+            >
             {/* Background Image Layer */}
             {bgImage && physicalMode && (
               <g 
@@ -729,6 +755,7 @@ export function BittingEditor() {
             </div>
           )}
         </div>
+        )}
         
         {/* Direct Bitting Input */}
         <div className="flex items-center gap-4 mt-2 p-3 bg-background rounded-lg border border-border shadow-inner">
