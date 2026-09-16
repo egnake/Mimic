@@ -43,7 +43,8 @@ export function BittingEditor() {
     );
   }
 
-  const template = getTemplate(currentProfile.templateId);
+  const templateId = currentProfile.templateId || "kwikset-kw1";
+  const template = getTemplate(templateId) || getTemplate("kwikset-kw1")!;
   const isDimple = template.cutStrategy === 'dimple';
 
   const handlePointerDown = (e: React.PointerEvent, posIndex: number) => {

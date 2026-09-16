@@ -1,10 +1,11 @@
 import { describe, it, expect } from 'vitest';
 import { generateScad } from '@/lib/export/scad-generator';
+import { KeyProfile } from '@/types';
 import key01 from '../fixtures/key-01.json';
 
 describe('Geometry Engine - OpenSCAD Generator', () => {
   it('should generate valid OpenSCAD boolean subtractions for a given bitting', () => {
-    const scad = generateScad(key01);
+    const scad = generateScad(key01 as unknown as KeyProfile);
     
     // Check for base polygon (warding profile)
     expect(scad).toContain('module kwikset_warding_profile()');

@@ -1,5 +1,6 @@
 import { describe, it, expect } from 'vitest';
 import { calculateEdgeCuts, getTipX, getBladeLength } from '@/lib/templates/index';
+import { KeyProfile } from '@/types';
 import key01 from '../fixtures/key-01.json';
 
 describe('Geometry Engine - Standard Profile', () => {
@@ -12,7 +13,7 @@ describe('Geometry Engine - Standard Profile', () => {
 
   it('should generate deterministic SVG paths for bitting [0, 2, 4, 6, 8] without regression', () => {
     // startY = 50, inverted = false
-    const path = calculateEdgeCuts(key01, 50, false);
+    const path = calculateEdgeCuts(key01 as unknown as KeyProfile, 50, false);
     
     // The path should start at SHOULDER_X (120)
     expect(path).toMatch(/^L 120,50\.0/);

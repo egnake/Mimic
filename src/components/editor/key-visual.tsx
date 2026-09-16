@@ -7,7 +7,8 @@ interface KeyVisualProps {
 }
 
 export function KeyVisual({ profile }: KeyVisualProps) {
-  const template = getTemplate(profile.templateId);
+  const templateId = profile.templateId || "kwikset-kw1";
+  const template = getTemplate(templateId) || getTemplate("kwikset-kw1")!;
   
   return (
     <>
