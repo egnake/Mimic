@@ -40,39 +40,66 @@ The framework is constructed on a modern, highly performant web stack:
 
 ## Installation & Deployment
 
-### Local Development
+Mimic is built for high-security environments and can be run locally or completely isolated inside a Docker container.
 
-1. Clone the repository to your local environment:
+### Option A: Local Development Environment
+
+1. Clone the repository to your local machine:
    ```bash
    git clone https://github.com/egnake/Mimic.git
    cd Mimic
    ```
 
-2. Install dependencies:
+2. Install dependencies via npm:
    ```bash
    npm install
    ```
 
-3. Initialize the development environment:
+3. Initialize the Next.js development server:
    ```bash
    npm run dev
    ```
+4. Access the framework locally by navigating to `http://localhost:3000` in your web browser.
 
-### Docker Containerization
+### Option B: Docker Containerization (Standalone Mode)
 
-For isolated penetration testing environments or secure deployment, Mimic includes a multi-stage Docker configuration utilizing Next.js standalone mode.
+For penetration testing environments or isolated deployment, Mimic includes a multi-stage Docker configuration utilizing Next.js standalone mode.
 
-```bash
-docker build -t mimic-framework .
-docker run -p 3000:3000 mimic-framework
-```
+1. Build the lightweight production container:
+   ```bash
+   docker build -t mimic-framework .
+   ```
+2. Run the container:
+   ```bash
+   docker run -p 3000:3000 mimic-framework
+   ```
+3. Access at `http://localhost:3000`.
 
-## Usage Guidelines
+## Operational Walkthrough
 
-1. **Import:** Navigate to the main editor and upload a clear, top-down photograph of the target key.
-2. **Calibrate:** Align the primary axes (shoulder reference point, blade axis). Adjust the `Pin Spacing` and `First Pin Offset` parameters to precisely intersect the physical bittings.
-3. **Decode:** Determine the bitting sequence. The live visualization engine will instantly reconstruct the keyway.
-4. **Export:** Export the profile as an OpenSCAD model and process it through a 3D slicer or CAM software for final physical replication.
+### Phase 1: Editor & Profile Setup
+Start by selecting your target key profile (e.g., Standard Edge, Hexagonal Schlage). The Bitting Editor allows you to directly input known depths or initialize an optical decoding process.
+
+<div align="center">
+  <img src="https://raw.githubusercontent.com/egnake/Mimic/master/public/docs/editor.png" alt="Bitting Editor Interface" width="800">
+</div>
+
+### Phase 2: Optical Calibration (Physical Decoder)
+Upload a top-down, well-lit photograph of the target key. Use the schematic overlay parameters (Zoom, X/Y Offset, Rotation, and Opacity) to perfectly align the physical key beneath the digital decoding grid.
+
+<div align="center">
+  <img src="https://raw.githubusercontent.com/egnake/Mimic/master/public/docs/calibration.png" alt="Photo Calibration Module" width="800">
+</div>
+
+### Phase 3: Geometry Alignment
+Align the primary red axis (`SHOULDER`) precisely with the mechanical shoulder stop of the physical key. Use the individual pin spacing sliders to align the blue intersection nodes with the lowest points of the physical V-cuts. The system calculates perspective distortions and outputs the true bitting sequence.
+
+<div align="center">
+  <img src="https://raw.githubusercontent.com/egnake/Mimic/master/public/docs/grid.png" alt="Mathematical Grid Alignment" width="600">
+</div>
+
+### Phase 4: Export & Replication
+Once decoded, evaluate the live SVG preview. Export the generated `.SCAD` file and process it through OpenSCAD to render a solid, printable `.STL`. The resulting geometry can be sent directly to 3D printers or CNC machines for physical bypass testing.
 
 ## Legal Disclaimer
 
