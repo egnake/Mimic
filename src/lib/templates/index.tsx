@@ -17,8 +17,9 @@ export interface KeyTemplate {
 export const templates: KeyTemplate[] = getAllPlugins().map(plugin => ({
   id: plugin.id,
   name: plugin.name,
-  cutStrategy: 'edge-single', // In the future, this can also be moved to the plugin
-  drawOutline: (profile) => plugin.drawOutline(profile)
+  cutStrategy: plugin.cutStrategy || 'edge-single',
+  drawOutline: (profile) => plugin.drawOutline(profile),
+  drawCuts: plugin.drawCuts ? (profile) => plugin.drawCuts!(profile) : undefined
 }));
 
 export function getTemplate(id: string): KeyTemplate | undefined {

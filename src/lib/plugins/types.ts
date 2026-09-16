@@ -31,8 +31,12 @@ export interface IKeyProfilePlugin {
   // Logical Metrics for 2D View
   svgGeometry: ISvgGeometry;
   
+  // Type of cut geometry
+  cutStrategy?: 'edge-single' | 'edge-double' | 'dimple' | 'laser-track';
+  
   // 2D SVG / React Rendering
   drawOutline(profile: KeyProfile): React.ReactNode;
+  drawCuts?(profile: KeyProfile): React.ReactNode;
   
   // 3D SCAD Rendering
   generateSCAD(profile: KeyProfile): string;
