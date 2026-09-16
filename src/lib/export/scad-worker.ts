@@ -6,16 +6,21 @@ self.onmessage = async (e: MessageEvent) => {
   try {
     const r = await render(scadString);
     if (r.ok) {
-      // Create copies of the buffers if transfer fails, but usually Next.js worker loader handles it.
+      if (!r.positions || !r.normals) {
+        self.postMessage({ id, ok: false, error: 'Engine returned ok but missing positions/normals (maybe 2D?)' });
+        return;
+      }
+      const posBuf = r.positions.buffer;
+      const normBuf = r.normals.buffer;
       self.postMessage({ 
         id, 
         ok: true, 
-        positions: r.positions, 
-        normals: r.normals, 
+        positions: posBuf, 
+        normals: normBuf, 
         triangleCount: r.triangleCount 
-      });
+      }, [posBuf, normBuf]);
     } else {
-      self.postMessage({ id, ok: false, error: r.error, diagnostics: r.diagnostics });
+      self.postMessage({ id, ok: false, error: r.error || 'Failed to render', diagnostics: r.diagnostics });
     }
   } catch (err: unknown) {
     self.postMessage({ id, ok: false, error: err instanceof Error ? err.message : String(err) });
