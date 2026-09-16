@@ -21,6 +21,10 @@ export const templates: KeyTemplate[] = getAllPlugins().map(plugin => ({
   drawOutline: (profile) => plugin.drawOutline(profile)
 }));
 
+export function getTemplate(id: string): KeyTemplate | undefined {
+  return templates.find(t => t.id === id);
+}
+
 // Backward compatibility or helper functions for older files if needed
 export function calculateEdgeCuts(profile: KeyProfile, startY: number, inverted: boolean = false): string {
   // If we still need to expose this old signature, we'll try to find the plugin, 
