@@ -1,0 +1,7 @@
+{
+  "id": "123e4567-e89b-12d3-a456-426614174000",
+  "name": "Golden Standard 5-Pin",
+  "templateId": "standard-edge",
+  "bitting": [0, 2, 4, 6, 8],
+  "positions": 5
+}
