@@ -15,8 +15,8 @@ export function MobileHeader() {
           <Menu className="w-5 h-5" />
         </ClayButton>
         <Link href="/" className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded overflow-hidden shadow border border-border flex items-center justify-center bg-primary/10 text-primary">
-            <KeySquare className="w-5 h-5" />
+          <div className="w-8 h-8 flex items-center justify-center">
+            <img src="/icon.svg" alt="Mimic Logo" className="w-full h-full object-contain" />
           </div>
           <span className="font-bold text-lg">Mimic</span>
         </Link>
