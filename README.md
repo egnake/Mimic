@@ -20,16 +20,16 @@
 ---
 
 ## 📑 Table of Contents
-- [System Overview](#-system-overview)
-- [Core Capabilities](#-core-capabilities)
-- [Architecture & Stack](#-architecture--stack)
-- [Installation & Deployment](#-installation--deployment)
-- [Operational Walkthrough](#-operational-walkthrough)
-- [Legal & Ethics](#️-legal--ethics)
+- [System Overview](#system-overview)
+- [Core Capabilities](#core-capabilities)
+- [Architecture & Stack](#architecture-stack)
+- [Installation & Deployment](#installation)
+- [Operational Walkthrough](#walkthrough)
+- [Legal & Ethics](#legal)
 
 ---
 
-## 🔬 System Overview
+## <a id="system-overview"></a>🔬 System Overview
 
 Through optical decoding and sub-pixel calibration, Mimic enables the reverse engineering of physical keys from standard photographs. The extracted cryptographic parameters (bittings) are processed by a custom mathematical geometry engine that dynamically reconstructs standard, round, and hexagonal (Schlage) key profiles. 
 
@@ -37,7 +37,7 @@ The finalized geometry is seamlessly exported into **OpenSCAD (.SCAD)** or **STL
 
 ---
 
-## ⚙️ Core Capabilities
+## <a id="core-capabilities"></a>⚙️ Core Capabilities
 
 | Capability | Description |
 | :--- | :--- |
@@ -48,7 +48,7 @@ The finalized geometry is seamlessly exported into **OpenSCAD (.SCAD)** or **STL
 
 ---
 
-## 🏗️ Architecture & Stack
+## <a id="architecture-stack"></a>🏗️ Architecture & Stack
 
 The framework is constructed on a modern, highly performant web stack, ensuring zero latency during rendering and calculation.
 
@@ -60,7 +60,7 @@ The framework is constructed on a modern, highly performant web stack, ensuring 
 
 ---
 
-## 🚀 Installation & Deployment
+## <a id="installation"></a>🚀 Installation & Deployment
 
 Mimic is built for high-security environments and can be run locally or completely isolated inside a Docker container.
 
@@ -105,7 +105,7 @@ For penetration testing environments or isolated deployment, Mimic includes a mu
 
 ---
 
-## 🛠️ Operational Walkthrough
+## <a id="walkthrough"></a>🛠️ Operational Walkthrough
 
 ### Phase 1: Editor & Profile Setup
 Start by selecting your target key profile (e.g., Standard Edge, Hexagonal Schlage). The Bitting Editor allows you to directly input known depths or initialize an optical decoding process.
@@ -133,7 +133,7 @@ Once decoded, evaluate the live SVG preview. Export the generated `.SCAD` file a
 
 ---
 
-## ⚠️ Legal & Ethics
+## <a id="legal"></a>⚠️ Legal & Ethics
 
 > [!WARNING]
 > **Academic & Authorized Use Only**
