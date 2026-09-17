@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Search, Menu } from "lucide-react";
+import { Search, Menu, KeySquare } from "lucide-react";
 import { ClayButton } from "@/components/ui/clay-button";
 
 import { useI18nStore } from "@/stores/i18n-store";
@@ -15,8 +15,8 @@ export function MobileHeader() {
           <Menu className="w-5 h-5" />
         </ClayButton>
         <Link href="/" className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded overflow-hidden shadow">
-            <img src="/logo.jpg" alt="Mimic Logo" className="w-full h-full object-cover" />
+          <div className="w-8 h-8 rounded overflow-hidden shadow border border-border flex items-center justify-center bg-primary/10 text-primary">
+            <KeySquare className="w-5 h-5" />
           </div>
           <span className="font-bold text-lg">Mimic</span>
         </Link>
