@@ -172,9 +172,9 @@ export default function ProfilesPage() {
                   {CardContent}
                 </div>
               ) : (
-                <Link key={profile.id} href={`/profiles/${profile.id}`}>
+                <div key={profile.id} onClick={() => router.push(`/profiles/${profile.id}`)}>
                   {CardContent}
-                </Link>
+                </div>
               );
             })}
           </div>
