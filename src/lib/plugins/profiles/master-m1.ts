@@ -114,10 +114,10 @@ module key_blank() {
 module v_cut(depth) {
   hull() {
     translate([0, 0, depth])
-    cube([0.5, 3, 0.1], center=true);
+    cube([0.5, 10, 0.1], center=true);
     
     translate([0, 0, depth + 10])
-    cube([20, 3, 0.1], center=true);
+    cube([20, 10, 0.1], center=true);
   }
 }
 
@@ -130,7 +130,7 @@ module cuts() {
       const cx = this.cutGeometry.firstPinOffset + i * this.cutGeometry.pinSpacing;
       const depthY = this.cutGeometry.rootDepth0 - (val * this.cutGeometry.cutStep);
       
-      scad += `  translate([${cx}, 0, ${depthY - 1}]) rotate([90, 0, 0]) v_cut(0);\n`;
+      scad += `  translate([${cx}, 0, ${depthY - 1}]) v_cut(0);\n`;
     }
 
     scad += `}

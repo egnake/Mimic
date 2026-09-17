@@ -157,9 +157,7 @@ module key_blank() {
 }
 
 module dimple_cut(depth) {
-  // Dimple cut is essentially a cone (or spherical cut) on the flat face
-  // We use a cylinder with a conical tip (r2 = 0)
-  translate([0, 0, ${bladeThickness/2}]) // Start from the face
+  // Dimple cut is a conical cut on the flat face
   rotate([0, 180, 0]) // Point inwards
   cylinder(h=depth + 0.5, r1=depth + 0.5, r2=0, center=false);
 }
@@ -172,11 +170,11 @@ module cuts() {
       
       const cx = this.cutGeometry.firstPinOffset + i * this.cutGeometry.pinSpacing;
       // Dimple cuts go into the side of the blade.
-      // Y is centered on the blade height.
+      // Z is centered on the blade height, Y is at the blade surface.
       const cy = bladeHeight / 2;
       const depth = this.cutGeometry.rootDepth0 + (val * this.cutGeometry.cutStep);
       
-      scad += `  translate([${cx}, ${cy}, 0]) dimple_cut(${depth});\n`;
+      scad += `  translate([${cx}, ${bladeThickness}, ${cy - 1}]) rotate([-90, 0, 0]) dimple_cut(${depth});\n`;
     }
 
     scad += `}

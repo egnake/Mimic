@@ -58,7 +58,8 @@ export const useEditorStore = create<EditorState>((set) => ({
       currentProfile: updatedProfile,
       history: newHistory,
       historyIndex: newHistory.length - 1,
-      isDirty: true
+      isDirty: true,
+      customScad: null
     };
   }),
 
@@ -85,7 +86,8 @@ export const useEditorStore = create<EditorState>((set) => ({
       currentProfile: updatedProfile,
       history: newHistory,
       historyIndex: newHistory.length - 1,
-      isDirty: true
+      isDirty: true,
+      customScad: null
     };
   }),
 
@@ -137,7 +139,8 @@ export const useEditorStore = create<EditorState>((set) => ({
       currentProfile: updatedProfile,
       history: newHistory,
       historyIndex: newHistory.length - 1,
-      isDirty: true
+      isDirty: true,
+      customScad: null
     };
   }),
 
@@ -161,7 +164,8 @@ export const useEditorStore = create<EditorState>((set) => ({
       currentProfile: updatedProfile,
       history: newHistory,
       historyIndex: newHistory.length - 1,
-      isDirty: true
+      isDirty: true,
+      customScad: null
     };
   }),
 
@@ -171,7 +175,8 @@ export const useEditorStore = create<EditorState>((set) => ({
       return {
         currentProfile: state.history[newIndex],
         historyIndex: newIndex,
-        isDirty: true
+        isDirty: true,
+        customScad: null
       };
     }
     return state;
@@ -183,7 +188,8 @@ export const useEditorStore = create<EditorState>((set) => ({
       return {
         currentProfile: state.history[newIndex],
         historyIndex: newIndex,
-        isDirty: true
+        isDirty: true,
+        customScad: null
       };
     }
     return state;
