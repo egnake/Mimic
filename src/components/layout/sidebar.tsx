@@ -1,9 +1,10 @@
 "use client";
 
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { Home, KeySquare, Settings, FileDown, Plus } from "lucide-react";
+import { Home, KeySquare, Settings, FileDown, Plus, Github } from "lucide-react";
 import { ClayButton } from "@/components/ui/clay-button";
 import { createEmptyProfile } from "@/lib/profile/normalize";
 import { useProfileStore } from "@/stores/profile-store";
@@ -19,6 +20,19 @@ export function Sidebar() {
   const { setProfile } = useEditorStore();
   const { t, lang, toggleLang } = useI18nStore();
   const router = useRouter();
+
+  const [stars, setStars] = useState<number | null>(null);
+
+  useEffect(() => {
+    fetch("https://api.github.com/repos/egnake/Mimic")
+      .then(res => res.json())
+      .then(data => {
+        if (typeof data.stargazers_count === "number") {
+          setStars(data.stargazers_count);
+        }
+      })
+      .catch(() => {});
+  }, []);
 
   const handleNewProfile = async () => {
     const newProfile = createEmptyProfile();
@@ -72,9 +86,17 @@ export function Sidebar() {
         })}
       </nav>
       
-      <div className="mt-auto px-2 py-4 flex items-center justify-between">
-        <div className="flex flex-col text-xs text-muted-foreground">
-        </div>
+      <div className="mt-auto px-2 py-4 flex items-center justify-between border-t border-border/50">
+        <a 
+          href="https://github.com/egnake/Mimic" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="flex items-center gap-2 text-xs font-medium text-muted-foreground hover:text-foreground transition-colors bg-surface px-2 py-1 rounded border border-border/50 hover:border-border"
+          title="View on GitHub"
+        >
+          <Github className="w-4 h-4" />
+          <span>{stars !== null ? stars : "..."}</span>
+        </a>
         <button 
           onClick={toggleLang}
           className="text-xs font-bold bg-surface border border-border rounded px-2 py-1 hover:bg-border transition-colors"
