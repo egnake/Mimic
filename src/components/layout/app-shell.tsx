@@ -1,8 +1,15 @@
 import * as React from "react";
 import { Sidebar } from "./sidebar";
 import { MobileHeader } from "./mobile-header";
+import { useProfileStore } from "@/stores/profile-store";
 
 export function AppShell({ children }: { children: React.ReactNode }) {
+  const { loadProfiles } = useProfileStore();
+
+  React.useEffect(() => {
+    loadProfiles();
+  }, [loadProfiles]);
+
   return (
     <div className="flex h-screen w-full overflow-hidden bg-background text-foreground">
       {/* Desktop/Tablet Sidebar */}

@@ -74,8 +74,6 @@ export function Sidebar() {
       
       <div className="mt-auto px-2 py-4 flex items-center justify-between">
         <div className="flex flex-col text-xs text-muted-foreground">
-          <p>{t.sidebar.version}</p>
-          <p>{t.sidebar.workspace}</p>
         </div>
         <button 
           onClick={toggleLang}
