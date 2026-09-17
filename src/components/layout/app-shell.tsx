@@ -1,6 +1,7 @@
 import * as React from "react";
 import { Sidebar } from "./sidebar";
 import { MobileHeader } from "./mobile-header";
+import { MobileNav } from "./mobile-nav";
 import { useProfileStore } from "@/stores/profile-store";
 
 export function AppShell({ children }: { children: React.ReactNode }) {
@@ -24,11 +25,14 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         </div>
 
         {/* Main Workspace */}
-        <main className="flex-1 overflow-y-auto p-4 md:p-8">
+        <main className="flex-1 overflow-y-auto p-4 md:p-8 pb-24 md:pb-8">
           <div className="max-w-6xl mx-auto h-full">
             {children}
           </div>
         </main>
+        
+        {/* Mobile Bottom Navigation */}
+        <MobileNav />
       </div>
     </div>
   );

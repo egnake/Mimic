@@ -11,9 +11,6 @@ export function MobileHeader() {
   return (
     <header className="flex items-center justify-between p-4 bg-surface/80 backdrop-blur-md border-b border-border z-10 sticky top-0">
       <div className="flex items-center gap-3">
-        <ClayButton variant="ghost" size="icon">
-          <Menu className="w-5 h-5" />
-        </ClayButton>
         <Link href="/" className="flex items-center gap-2">
           <div className="w-8 h-8 rounded overflow-hidden shadow border border-border flex items-center justify-center">
             <img src="/logo.jpg" alt="Mimic Logo" className="w-full h-full object-cover" />
@@ -29,9 +26,6 @@ export function MobileHeader() {
         >
           {lang.toUpperCase()}
         </button>
-        <ClayButton variant="ghost" size="icon">
-          <Search className="w-5 h-5" />
-        </ClayButton>
       </div>
     </header>
   );
