@@ -28,7 +28,17 @@ export const tr = {
     recentActivity: "Son Aktiviteler",
     jumpBack: "Kaldığın Yerden Devam Et",
     noProfiles: "Henüz hiç profil yok. Yeni bir tane oluşturarak başla!",
-    createFirst: "İlk Profilini Oluştur"
+    createFirst: "İlk Profili Oluştur"
+  },
+  profiles: {
+    selectAll: "Tümünü Seç",
+    deselectAll: "Seçimi Kaldır",
+    deleteSelected: "Seçilenleri Sil",
+    select: "Seç",
+    deselect: "Seçimi Kaldır",
+    openEditor: "Editöre Git →",
+    confirmDelete: "Bu profili silmek istediğinize emin misiniz?",
+    confirmDeleteMultiple: "Toplam {count} profili silmek istediğinize emin misiniz?"
   },
   editor: {
     bittingEditor: "Şifre (Bitting) Editörü",

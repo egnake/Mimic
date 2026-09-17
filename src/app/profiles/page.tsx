@@ -40,7 +40,7 @@ export default function ProfilesPage() {
   };
 
   const handleDeleteSelected = async () => {
-    if (confirm(`Are you sure you want to delete ${selectedIds.size} profile(s)?`)) {
+    if (confirm(t.profiles.confirmDeleteMultiple.replace("{count}", selectedIds.size.toString()))) {
       for (const id of Array.from(selectedIds)) {
         await deleteProfile(id);
       }
@@ -59,7 +59,7 @@ export default function ProfilesPage() {
 
   const handleDeleteSingle = async (id: string, e: React.MouseEvent) => {
     e.preventDefault();
-    if (confirm("Are you sure you want to delete this profile?")) {
+    if (confirm(t.profiles.confirmDelete)) {
       await deleteProfile(id);
     }
   };
@@ -78,18 +78,18 @@ export default function ProfilesPage() {
                 {isSelectionMode ? (
                   <>
                     <ClayButton variant="default" onClick={handleSelectAll}>
-                      {selectedIds.size === profiles.length ? "Deselect All" : "Select All"}
+                      {selectedIds.size === profiles.length ? t.profiles.deselectAll : t.profiles.selectAll}
                     </ClayButton>
                     <ClayButton variant="danger" onClick={handleDeleteSelected} disabled={selectedIds.size === 0}>
-                      <Trash2 className="w-5 h-5 mr-2" /> Delete Selected ({selectedIds.size})
+                      <Trash2 className="w-5 h-5 mr-2" /> {t.profiles.deleteSelected} ({selectedIds.size})
                     </ClayButton>
                     <ClayButton variant="default" onClick={() => { setIsSelectionMode(false); setSelectedIds(new Set()); }}>
-                      Cancel
+                      {t.common.cancel}
                     </ClayButton>
                   </>
                 ) : (
                   <ClayButton variant="default" onClick={() => setIsSelectionMode(true)}>
-                    <CheckSquare className="w-5 h-5 mr-2" /> Select
+                    <CheckSquare className="w-5 h-5 mr-2" /> {t.profiles.select}
                   </ClayButton>
                 )}
               </>
@@ -161,7 +161,7 @@ export default function ProfilesPage() {
                       </button>
                     )}
                     <span className="text-xs text-primary font-medium opacity-0 group-hover:opacity-100 transition-opacity ml-auto">
-                      {isSelectionMode ? (isSelected ? 'Deselect' : 'Select') : 'Open Editor →'}
+                      {isSelectionMode ? (isSelected ? t.profiles.deselect : t.profiles.select) : t.profiles.openEditor}
                     </span>
                   </div>
                 </ClayCard>

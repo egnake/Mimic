@@ -30,6 +30,16 @@ export const en = {
     noProfiles: "No profiles yet. Create one to get started!",
     createFirst: "Create First Profile"
   },
+  profiles: {
+    selectAll: "Select All",
+    deselectAll: "Deselect All",
+    deleteSelected: "Delete Selected",
+    select: "Select",
+    deselect: "Deselect",
+    openEditor: "Open Editor →",
+    confirmDelete: "Are you sure you want to delete this profile?",
+    confirmDeleteMultiple: "Are you sure you want to delete {count} profile(s)?"
+  },
   editor: {
     bittingEditor: "Bitting Editor",
     template: "Template:",
