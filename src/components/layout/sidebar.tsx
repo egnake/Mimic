@@ -68,8 +68,8 @@ export function Sidebar() {
   return (
     <div className="flex flex-col h-full p-4">
       <div className="flex items-center gap-3 px-2 py-4 mb-6">
-        <div className="w-10 h-10 overflow-hidden flex items-center justify-center">
-          <img src="/icon.svg" alt="Mimic Logo" className="w-full h-full object-contain" />
+        <div className="w-10 h-10 overflow-hidden flex items-center justify-center rounded-xl shadow-lg border border-border">
+          <img src="/logo.jpg" alt="Mimic Logo" className="w-full h-full object-cover" />
         </div>
         <span className="text-xl font-bold tracking-tight">Mimic</span>
       </div>
