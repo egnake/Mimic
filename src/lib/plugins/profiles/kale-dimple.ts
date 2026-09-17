@@ -126,30 +126,32 @@ module kale_dimple_profile() {
 
 module key_blank() {
   union() {
-    // Bow
-    translate([0, -25, 0])
+    // Realistic Bow (Head of the key)
+    translate([-12, ${bladeThickness/2}, ${bladeHeight/2} - ${bladeThickness/2}])
+    rotate([90, 0, 0])
     difference() {
       // Main rounded bow shape
       hull() {
-        translate([0, 10, -${bladeThickness/2}]) cylinder(r=10, h=${bladeThickness}, center=false);
-        translate([-12, -8, -${bladeThickness/2}]) cylinder(r=12, h=${bladeThickness}, center=false);
-        translate([12, -8, -${bladeThickness/2}]) cylinder(r=12, h=${bladeThickness}, center=false);
+        translate([7, 0, 0]) cylinder(r=${bladeHeight/2 + 1}, h=${bladeThickness}, center=true);
+        translate([-6, 0, 0]) cylinder(r=12.5, h=${bladeThickness}, center=true);
       }
       // Keyring hole
-      translate([0, -10, -${bladeThickness}])
-      cylinder(r=4, h=${bladeThickness*2}, center=false);
+      translate([-12, 0, 0])
+      cylinder(r=3.5, h=${bladeThickness + 2}, center=true);
     }
+    
+    // Neck (Connects bow to blade)
+    translate([-5, 0, -${bladeThickness/2}])
+    cube([5, ${bladeThickness}, ${bladeHeight}]);
+    
+    // Shoulder Stop
+    translate([-2, -0.5, -${bladeThickness/2}-0.5])
+    cube([2, ${bladeThickness + 1}, ${bladeHeight + 1}]);
     
     // Blade
     translate([0, 0, -${bladeThickness/2}])
     rotate([90, 0, 90])
     linear_extrude(height=${bladeLength})
-    kale_dimple_profile();
-    
-    // Tip
-    translate([${bladeLength}, 0, 0])
-    rotate([90, 0, 90])
-    linear_extrude(height=4, scale=[0.5, 0.7])
     kale_dimple_profile();
   }
 }

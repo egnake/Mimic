@@ -80,28 +80,31 @@ module kwikset_warding_profile() {
 module key_blank() {
   union() {
     // Realistic Bow (Head of the key)
-    translate([0, -25, 0])
+    translate([-12, ${bladeThickness/2}, ${bladeHeight/2} - 1])
+    rotate([90, 0, 0])
     difference() {
       // Main rounded bow shape
       hull() {
-        translate([0, 10, -1]) cylinder(r=10, h=2, center=false);
-        translate([-12, -8, -1]) cylinder(r=12, h=2, center=false);
-        translate([12, -8, -1]) cylinder(r=12, h=2, center=false);
+        translate([7, 0, 0]) cylinder(r=${bladeHeight/2 + 1}, h=${bladeThickness}, center=true);
+        translate([-6, 0, 0]) cylinder(r=12.5, h=${bladeThickness}, center=true);
       }
       // Keyring hole
-      translate([0, -10, -2])
-      cylinder(r=4, h=4, center=false);
+      translate([-12, 0, 0])
+      cylinder(r=3.5, h=${bladeThickness + 2}, center=true);
     }
+    
+    // Neck (Connects bow to blade)
+    translate([-5, 0, -1])
+    cube([5, ${bladeThickness}, ${bladeHeight}]);
+    
+    // Shoulder Stop
+    translate([-2, -0.5, -1.5])
+    cube([2, ${bladeThickness + 1}, ${bladeHeight + 1}]);
     
     // Blade rendering
     translate([0, 0, -1])
     rotate([90, 0, 90])
     linear_extrude(height=${bladeLength})
-    kwikset_warding_profile();
-    
-    translate([${bladeLength}, 0, 0])
-    rotate([90, 0, 90])
-    linear_extrude(height=4, scale=[0.2, 0.5])
     kwikset_warding_profile();
   }
 }
