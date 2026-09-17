@@ -72,12 +72,12 @@ export default function ProfilesPage() {
                     <ClayButton variant="danger" onClick={handleDeleteSelected} disabled={selectedIds.size === 0}>
                       <Trash2 className="w-5 h-5 mr-2" /> Delete Selected ({selectedIds.size})
                     </ClayButton>
-                    <ClayButton variant="secondary" onClick={() => { setIsSelectionMode(false); setSelectedIds(new Set()); }}>
+                    <ClayButton variant="default" onClick={() => { setIsSelectionMode(false); setSelectedIds(new Set()); }}>
                       Cancel
                     </ClayButton>
                   </>
                 ) : (
-                  <ClayButton variant="secondary" onClick={() => setIsSelectionMode(true)}>
+                  <ClayButton variant="default" onClick={() => setIsSelectionMode(true)}>
                     <CheckSquare className="w-5 h-5 mr-2" /> Select
                   </ClayButton>
                 )}
